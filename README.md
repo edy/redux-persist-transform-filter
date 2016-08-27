@@ -9,6 +9,7 @@ Filter transformator for redux-persist
 ```
   npm install redux-persist-transform-filter
 ```
+
 ## Usage
 
 ```js
@@ -42,4 +43,13 @@ persistStore(store, {
     saveAndloadSubsetFilter,
   ]
 });
+```
+
+## Example project
+
+```sh
+git clone https://github.com/edy/redux-persist-transform-filter-example.git
+cd redux-persist-transform-filter-example
+npm install
+npm start
 ```
