@@ -25,7 +25,9 @@ describe('redux-persist-transform-filter', () => {
 
 		it('should return a subset, given an array of key paths', () => {
 			expect(persistFilter({a: {b:'b', c:'c'}, d:'d'}, ['a.b'])).to.deep.equal({a: {b:'b'}});
+			expect(persistFilter({a: {b:'b', c:'c'}, d:'d'}, [['a', 'b']])).to.deep.equal({a: {b:'b'}});
 			expect(persistFilter({a: {b:'b', c:'c'}, d:'d'}, ['a.b', 'a.c'])).to.deep.equal({a: {b:'b', c:'c'}});
+			expect(persistFilter({a: {b:'b', c:'c'}, d:'d'}, [['a', 'b'], ['a', 'c']])).to.deep.equal({a: {b:'b', c:'c'}});
 		});
 	});
 
