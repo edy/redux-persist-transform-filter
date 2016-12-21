@@ -1,6 +1,6 @@
 {
   "name": "redux-persist-transform-filter",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Filter transformator for redux-persist",
   "main": "dist/index.js",
   "scripts": {
@@ -28,8 +28,7 @@
   },
   "dependencies": {
     "lodash.get": "^4.4.2",
-    "lodash.set": "^4.3.2",
-    "redux-persist": "^3.4.0"
+    "lodash.set": "^4.3.2"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
@@ -37,10 +36,11 @@
     "babel-register": "^6.11.6",
     "chai": "^3.5.0",
     "mocha": "^3.0.2",
-    "release-it": "^2.4.3"
+    "release-it": "^2.4.3",
+    "redux-persist": "^4.0.1"
   },
   "peerDependencies": {
-    "redux-persist": "^3.4.0"
+    "redux-persist": "^3.4.0 || ^4.0.1"
   },
   "files": [
     "dist",
