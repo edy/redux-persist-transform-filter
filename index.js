@@ -8,23 +8,11 @@ import isUndefined from 'lodash.isUndefined';
 export type returnType = Map<string, any> | {[key: string]: any};
 
 export default (reducerName: string, inboundPaths: string | string[], outboundPaths: string | string[]) => {
-	return createTransform(
-		// inbound
-		(inboundState: any, key: string) => {
-			return inboundPaths
-				? persistFilter(inboundState, inboundPaths)
-				: inboundState;
-		},
-
-		// outbound
-		(outboundState: any, key: string) => {
-			return outboundPaths
-				? persistFilter(outboundState, outboundPaths)
-				: outboundState;
-		},
-
-		{whitelist: [reducerName]}
-	);
+    return createTransform(
+        (inboundState: any, key: string) => inboundPaths ? persistFilter(inboundState, inboundPaths) : inboundState,
+        (outboundState: any, key: string) => outboundPaths ? persistFilter(outboundState, outboundPaths) : outboundState,
+        {whitelist: [reducerName]}
+    );
 };
 
 export function persistFilter (state: any, paths: string | string[] = []): returnType {
