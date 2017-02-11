@@ -21,9 +21,15 @@ const saveSubsetFilter = createFilter(
   ['keyYouWantToSave1', 'keyYouWantToSave2']
 );
 
+// you want to remove some keys before you save
+const saveSubsetBlacklistFilter = createBlacklistFilter(
+  'myReducerTwo',
+  ['keyYouDontWantToSave1', 'keyYouDontWantToSave2']
+);
+
 // you want to load only a subset of your state of reducer two
 const loadSubsetFilter = createFilter(
-  'myReducerTwo',
+  'myReducerThree',
   null,
   ['keyYouWantToLoad1', 'keyYouWantToLoad2']
 );
@@ -31,7 +37,7 @@ const loadSubsetFilter = createFilter(
 // saving a subset and loading a different subset is possible
 // but doesn't make much sense because you'd load an empty state
 const saveAndloadSubsetFilter = createFilter(
-  'myReducerThree',
+  'myReducerFour',
   ['one', 'two']
   ['three', 'four']
 );
@@ -39,6 +45,7 @@ const saveAndloadSubsetFilter = createFilter(
 persistStore(store, {
   transforms: [
     saveSubsetFilter,
+    saveSubsetBlacklistFilter,
     loadSubsetFilter,
     saveAndloadSubsetFilter,
   ]

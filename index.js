@@ -1,42 +1,64 @@
 import { createTransform } from 'redux-persist';
 import get from 'lodash.get';
 import set from 'lodash.set';
+import unset from 'lodash.unset';
 
-export default (reducerName, inboundPaths, outboundPaths) => {
+export default function createFilter (reducerName, inboundPaths, outboundPaths, transformType = 'whitelist') {
 	return createTransform(
 		// inbound
 		(inboundState, key) => {
 			return inboundPaths
-				? persistFilter(inboundState, inboundPaths)
+				? persistFilter(inboundState, inboundPaths, transformType)
 				: inboundState;
 		},
 
 		// outbound
 		(outboundState, key) => {
 			return outboundPaths
-				? persistFilter(outboundState, outboundPaths)
+				? persistFilter(outboundState, outboundPaths, transformType)
 				: outboundState;
 		},
 
-		{whitelist: [reducerName]}
+		{'whitelist': [reducerName]}
 	);
 };
 
-export function persistFilter (state, paths = []) {
-	const subset = {};
+export function createWhitelistFilter (reducerName, inboundPaths, outboundPaths) {
+	return createFilter(reducerName, inboundPaths, outboundPaths, 'whitelist');
+}
+
+export function createBlacklistFilter (reducerName, inboundPaths, outboundPaths) {
+	return createFilter(reducerName, inboundPaths, outboundPaths, 'blacklist');
+}
+
+export function persistFilter (state, paths = [], transformType = 'whitelist') {
+	let subset = {};
 
 	// support only one key
 	if (typeof paths === 'string') {
 		paths = [paths];
 	}
 
-	paths.forEach((path) => {
-		const value = get(state, path);
+	if (transformType === 'whitelist') {
+		paths.forEach((path) => {
+			const value = get(state, path);
 
-		if (typeof value !== 'undefined') {
-			set(subset, path, value);
-		}
-	});
+			if (typeof value !== 'undefined') {
+				set(subset, path, value);
+			}
+		});
+	} else if (transformType === 'blacklist') {
+		subset = Object.assign({}, state);
+		paths.forEach((path) => {
+			const value = get(state, path);
+
+			if (typeof value !== 'undefined') {
+				unset(subset, path);
+			}
+		});
+	} else {
+		subset = state;
+	}
 
 	return subset;
 }
