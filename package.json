@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha --compilers js:babel-register spec.js",
     "build": "mkdir -p dist && babel index.js -o dist/index.js",
-    "release": "npm test && npm build && release-it"
+    "release": "npm test && npm run build && release-it"
   },
   "repository": {
     "type": "git",
