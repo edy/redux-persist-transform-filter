@@ -29,7 +29,9 @@
   "dependencies": {
     "lodash.get": "^4.4.2",
     "lodash.set": "^4.3.2",
-    "lodash.unset": "^4.5.2"
+    "lodash.unset": "^4.5.2",
+    "lodash.isempty": "^4.4.0",
+    "lodash.pickby": "^4.6.0",
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
