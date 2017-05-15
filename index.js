@@ -4,6 +4,7 @@ import set from 'lodash.set';
 import unset from 'lodash.unset';
 import pickBy from 'lodash.pickby';
 import isEmpty from 'lodash.isempty';
+import forIn from 'lodash.forIn';
 
 export default function createFilter (reducerName, inboundPaths, outboundPaths, transformType = 'whitelist') {
 	return createTransform(
@@ -48,7 +49,7 @@ export function persistFilter (state, paths = [], transformType = 'whitelist') {
 
 	if (transformType === 'whitelist') {
 		paths.forEach((path) => {
-			if (typeof path === 'object') {
+			if (typeof path === 'object' && !(path instanceof Array)) {
 				const value = filterObject(path, state);
 
 				if (!isEmpty(value)) {
@@ -65,11 +66,11 @@ export function persistFilter (state, paths = [], transformType = 'whitelist') {
 	} else if (transformType === 'blacklist') {
 		subset = Object.assign({}, state);
 		paths.forEach((path) => {
-			if (typeof path === 'object') {
+			if (typeof path === 'object' && !(path instanceof Array)) {
 				const value = filterObject(path, state);
 
 				if (!isEmpty(value)) {
-					unset(subset, path.path);
+					forIn(value, (value, key) => { unset(subset, `${path.path}.${key}`) });
 				}
 			} else {
 				const value = get(state, path);
