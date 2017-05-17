@@ -4,7 +4,7 @@ import set from 'lodash.set';
 import unset from 'lodash.unset';
 import pickBy from 'lodash.pickby';
 import isEmpty from 'lodash.isempty';
-import forIn from 'lodash.forIn';
+import forIn from 'lodash.forin';
 
 export default function createFilter (reducerName, inboundPaths, outboundPaths, transformType = 'whitelist') {
 	return createTransform(
