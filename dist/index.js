@@ -3,6 +3,9 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 exports.default = createFilter;
 exports.createWhitelistFilter = createWhitelistFilter;
 exports.createBlacklistFilter = createBlacklistFilter;
@@ -21,6 +24,18 @@ var _lodash4 = _interopRequireDefault(_lodash3);
 var _lodash5 = require('lodash.unset');
 
 var _lodash6 = _interopRequireDefault(_lodash5);
+
+var _lodash7 = require('lodash.pickby');
+
+var _lodash8 = _interopRequireDefault(_lodash7);
+
+var _lodash9 = require('lodash.isempty');
+
+var _lodash10 = _interopRequireDefault(_lodash9);
+
+var _lodash11 = require('lodash.forin');
+
+var _lodash12 = _interopRequireDefault(_lodash11);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47,6 +62,17 @@ function createBlacklistFilter(reducerName, inboundPaths, outboundPaths) {
 	return createFilter(reducerName, inboundPaths, outboundPaths, 'blacklist');
 }
 
+function filterObject(_ref, state) {
+	var path = _ref.path,
+	    _ref$filterFunction = _ref.filterFunction,
+	    filterFunction = _ref$filterFunction === undefined ? function () {
+		return true;
+	} : _ref$filterFunction;
+
+	var value = (0, _lodash2.default)(state, path);
+	return (0, _lodash8.default)(value, filterFunction);
+}
+
 function persistFilter(state) {
 	var paths = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
 	var transformType = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'whitelist';
@@ -60,19 +86,37 @@ function persistFilter(state) {
 
 	if (transformType === 'whitelist') {
 		paths.forEach(function (path) {
-			var value = (0, _lodash2.default)(state, path);
+			if ((typeof path === 'undefined' ? 'undefined' : _typeof(path)) === 'object' && !(path instanceof Array)) {
+				var value = filterObject(path, state);
 
-			if (typeof value !== 'undefined') {
-				(0, _lodash4.default)(subset, path, value);
+				if (!(0, _lodash10.default)(value)) {
+					(0, _lodash4.default)(subset, path.path, value);
+				}
+			} else {
+				var _value = (0, _lodash2.default)(state, path);
+
+				if (typeof _value !== 'undefined') {
+					(0, _lodash4.default)(subset, path, _value);
+				}
 			}
 		});
 	} else if (transformType === 'blacklist') {
 		subset = Object.assign({}, state);
 		paths.forEach(function (path) {
-			var value = (0, _lodash2.default)(state, path);
+			if ((typeof path === 'undefined' ? 'undefined' : _typeof(path)) === 'object' && !(path instanceof Array)) {
+				var value = filterObject(path, state);
 
-			if (typeof value !== 'undefined') {
-				(0, _lodash6.default)(subset, path);
+				if (!(0, _lodash10.default)(value)) {
+					(0, _lodash12.default)(value, function (value, key) {
+						(0, _lodash6.default)(subset, path.path + '.' + key);
+					});
+				}
+			} else {
+				var _value2 = (0, _lodash2.default)(state, path);
+
+				if (typeof _value2 !== 'undefined') {
+					(0, _lodash6.default)(subset, path);
+				}
 			}
 		});
 	} else {
