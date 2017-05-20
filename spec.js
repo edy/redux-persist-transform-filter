@@ -27,6 +27,12 @@ describe('redux-persist-transform-filter', () => {
 			expect(persistFilter({a: {b:'b', c:'c'}, d:'d'}, ['a.b', 'a.c'])).to.deep.equal({a: {b:'b', c:'c'}});
 			expect(persistFilter({a: {b:'b', c:'c'}, d:'d'}, [['a', 'b'], ['a', 'c']])).to.deep.equal({a: {b:'b', c:'c'}});
 		});
+
+		it('should return a subset, given an object that contains a path and a filterFunction', () => {
+			const store = {a:{'id1':{x:true, b:'b'}, 'id2':{x:true, b:'bb'}, 'id3':{x:false, b:'bbb'}}, d:'d'};
+			expect(persistFilter(store, [{ path: 'a', filterFunction: item => item.x }])).to.deep.equal({a:{'id1':{x:true, b:'b'}, 'id2':{x:true, b:'bb'}}});
+			expect(persistFilter(store, [{ path: 'a', filterFunction: item => item.b === 'bb' }])).to.deep.equal({a:{'id2':{x:true, b:'bb'}}});
+		});
 	});
 
 	describe('persistFilter (blacklist)', () => {
@@ -49,6 +55,12 @@ describe('redux-persist-transform-filter', () => {
 			expect(persistFilter({a: {b:'b', c:'c'}, d:'d'}, [['a', 'b']], 'blacklist')).to.deep.equal({a: {c:'c'}, d:'d'});
 			expect(persistFilter({a: {b:'b', c:'c'}, d:'d'}, ['a.b', 'a.c'], 'blacklist')).to.deep.equal({a:{}, d:'d'});
 			expect(persistFilter({a: {b:'b', c:'c'}, d:'d'}, [['a', 'b'], ['a', 'c']], 'blacklist')).to.deep.equal({a:{}, d:'d'});
+		});
+
+		it('should return a subset, given an object that contains a path and a filterFunction', () => {
+			const store = {a:{'id1':{x:true, b:'b'}, 'id2':{x:true, b:'bb'}, 'id3':{x:false, b:'bbb'}}, d:'d'};
+			expect(persistFilter(JSON.parse(JSON.stringify(store)), [{ path: 'a', filterFunction: item => item.x }], 'blacklist')).to.deep.equal({a:{'id3':{x:false, b:'bbb'}}, d:'d'});
+			expect(persistFilter(JSON.parse(JSON.stringify(store)), [{ path: 'a', filterFunction: item => item.b === 'bb' }], 'blacklist')).to.deep.equal({a:{'id1':{x:true, b:'b'}, 'id3':{x:false, b:'bbb'}}, d:'d'});
 		});
 	});
 
