@@ -29,19 +29,19 @@
   "dependencies": {
     "lodash.forin": "^4.4.0",
     "lodash.get": "^4.4.2",
-    "lodash.set": "^4.3.2",
-    "lodash.unset": "^4.5.2",
     "lodash.isempty": "^4.4.0",
-    "lodash.pickby": "^4.6.0"
+    "lodash.pickby": "^4.6.0",
+    "lodash.set": "^4.3.2",
+    "lodash.unset": "^4.5.2"
   },
   "devDependencies": {
-    "babel-cli": "^6.11.4",
-    "babel-preset-es2015": "^6.13.2",
-    "babel-register": "^6.11.6",
+    "babel-cli": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.24.1",
     "chai": "^3.5.0",
-    "mocha": "^3.0.2",
-    "release-it": "^2.4.3",
-    "redux-persist": "^4.0.1"
+    "mocha": "^3.4.2",
+    "redux-persist": "^4.0.1",
+    "release-it": "^2.7.3"
   },
   "peerDependencies": {
     "redux-persist": "^3.4.0 || ^4.0.1"
