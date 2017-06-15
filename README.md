@@ -13,7 +13,7 @@ Filter transformator for redux-persist
 ## Usage
 
 ```js
-import { createFilter, createBlacklistFilter } from 'redux-persist-transform-filter';
+import createFilter, { createBlacklistFilter } from 'redux-persist-transform-filter';
 
 // this works too:
 import createFilter, { createBlacklistFilter } from 'redux-persist-transform-filter';
