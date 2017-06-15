@@ -15,6 +15,9 @@ Filter transformator for redux-persist
 ```js
 import { createFilter, createBlacklistFilter } from 'redux-persist-transform-filter';
 
+// this works too:
+import createFilter, { createBlacklistFilter } from 'redux-persist-transform-filter';
+
 // you want to store only a subset of your state of reducer one
 const saveSubsetFilter = createFilter(
   'myReducerOne',
