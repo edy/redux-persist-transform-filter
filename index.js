@@ -6,7 +6,7 @@ import pickBy from 'lodash.pickby';
 import isEmpty from 'lodash.isempty';
 import forIn from 'lodash.forin';
 
-export default function createFilter (reducerName, inboundPaths, outboundPaths, transformType = 'whitelist') {
+export function createFilter (reducerName, inboundPaths, outboundPaths, transformType = 'whitelist') {
 	return createTransform(
 		// inbound
 		(inboundState, key) => {
@@ -86,3 +86,5 @@ export function persistFilter (state, paths = [], transformType = 'whitelist') {
 
 	return subset;
 }
+
+export default createFilter;
