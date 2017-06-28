@@ -70,6 +70,11 @@ function filterObject(_ref, state) {
 	} : _ref$filterFunction;
 
 	var value = (0, _lodash2.default)(state, path);
+
+	if (value instanceof Array) {
+		return value.filter(filterFunction);
+	}
+
 	return (0, _lodash8.default)(value, filterFunction);
 }
 
@@ -107,9 +112,15 @@ function persistFilter(state) {
 				var value = filterObject(path, state);
 
 				if (!(0, _lodash10.default)(value)) {
-					(0, _lodash12.default)(value, function (value, key) {
-						(0, _lodash6.default)(subset, path.path + '.' + key);
-					});
+					if (value instanceof Array) {
+						(0, _lodash4.default)(subset, path.path, (0, _lodash2.default)(subset, path.path).filter(function (x) {
+							return false;
+						}));
+					} else {
+						(0, _lodash12.default)(value, function (value, key) {
+							(0, _lodash6.default)(subset, path.path + '[' + key + ']');
+						});
+					}
 				}
 			} else {
 				var _value2 = (0, _lodash2.default)(state, path);
