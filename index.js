@@ -35,8 +35,13 @@ export function createBlacklistFilter (reducerName, inboundPaths, outboundPaths)
 }
 
 function filterObject({ path, filterFunction = () => true }, state) {
-  const value = get(state, path);
-  return pickBy(value, filterFunction);
+	const value = get(state, path);
+
+	if (value instanceof Array) {
+		return value.filter(filterFunction)
+	}
+
+	return pickBy(value, filterFunction);
 }
 
 export function persistFilter (state, paths = [], transformType = 'whitelist') {
@@ -70,7 +75,11 @@ export function persistFilter (state, paths = [], transformType = 'whitelist') {
 				const value = filterObject(path, state);
 
 				if (!isEmpty(value)) {
-					forIn(value, (value, key) => { unset(subset, `${path.path}.${key}`) });
+					if (value instanceof Array) {
+						set(subset, path.path, get(subset, path.path).filter((x) => false));
+					} else {
+						forIn(value, (value, key) => { unset(subset, `${path.path}[${key}]`) });
+					}
 				}
 			} else {
 				const value = get(state, path);
@@ -78,7 +87,7 @@ export function persistFilter (state, paths = [], transformType = 'whitelist') {
 				if (typeof value !== 'undefined') {
 					unset(subset, path);
 				}
-		}
+			}
 		});
 	} else {
 		subset = state;
