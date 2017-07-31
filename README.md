@@ -1,7 +1,7 @@
 # redux-persist-transform-filter
 
 [![npm](https://img.shields.io/npm/v/redux-persist-transform-filter.svg?maxAge=2592000&style=flat-square)](https://www.npmjs.com/package/redux-persist-transform-filter)
-[![Travis](https://img.shields.io/travis/edy/redux-persist-transform-filter.svg?maxAge=2592000&style=flat-square)]()
+[![Build Status](https://travis-ci.org/edy/redux-persist-transform-filter.svg?branch=master)](https://travis-ci.org/edy/redux-persist-transform-filter)
 
 Filter transformator for redux-persist
 
