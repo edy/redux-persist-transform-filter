@@ -30,7 +30,7 @@ const saveSubsetBlacklistFilter = createBlacklistFilter(
   ['keyYouDontWantToSave1', 'keyYouDontWantToSave2']
 );
 
-// you want to load only a subset of your state of reducer two
+// you want to load only a subset of your state of reducer three
 const loadSubsetFilter = createFilter(
   'myReducerThree',
   null,
