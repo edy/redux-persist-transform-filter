@@ -150,21 +150,25 @@ describe('redux-persist-transform-filter', () => {
 		});
 
 		it('should save a subset', () => {
+			let state = {a: {b:'b', c:'c'}, d:'d'};
 			const myFilter = createBlacklistFilter('reducerName', ['a.b', 'd']);
 
 			// simulates a save
-			const result = myFilter.in({a: {b:'b', c:'c'}, d:'d'}, 'reducerName');
+			const result = myFilter.in(state, 'reducerName');
 
 			expect(result).to.deep.equal({a: {c:'c'}});
+			expect(state).to.deep.equal({a: {b:'b', c:'c'}, d:'d'});
 		});
 
 		it('should load a subset', () => {
+			let state = {a: {b:'b', c:'c'}, d:'d'};
 			const myFilter = createBlacklistFilter('reducerName', undefined, ['a.b', 'd']);
 
 			// simulates a load
-			const result = myFilter.out({a: {b:'b', c:'c'}, d:'d'}, 'reducerName');
+			const result = myFilter.out(state, 'reducerName');
 
 			expect(result).to.deep.equal({a: {c:'c'}});
+			expect(state).to.deep.equal({a: {b:'b', c:'c'}, d:'d'});
 		});
 	});
 });
