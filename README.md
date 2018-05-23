@@ -45,6 +45,21 @@ const saveAndloadSubsetFilter = createFilter(
   ['three', 'four']
 );
 
+const predicateFilter = persistFilter(
+	'form',
+	[
+		{ path: 'one', filterFunction: (item: any): boolean => item.mustBeStored },
+		{ path: 'two', filterFunction: (item: any): boolean => item.mustBeStored },
+	],
+	'whitelist'
+)
+
+const normalPathFilter = persistFilter(
+	'form',
+	['one', 'two'],
+	'whitelist'
+)
+
 persistStore(store, {
   transforms: [
     saveSubsetFilter,
