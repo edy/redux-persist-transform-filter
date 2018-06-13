@@ -5,6 +5,7 @@ import unset from 'lodash.unset';
 import pickBy from 'lodash.pickby';
 import isEmpty from 'lodash.isempty';
 import forIn from 'lodash.forin';
+import cloneDeep from 'lodash.clonedeep';
 
 export function createFilter (reducerName, inboundPaths, outboundPaths, transformType = 'whitelist') {
 	return createTransform(
@@ -69,7 +70,7 @@ export function persistFilter (state, paths = [], transformType = 'whitelist') {
 			}
 		});
 	} else if (transformType === 'blacklist') {
-		subset = Object.assign({}, state);
+		subset = cloneDeep(state);
 		paths.forEach((path) => {
 			if (typeof path === 'object' && !(path instanceof Array)) {
 				const value = filterObject(path, state);
