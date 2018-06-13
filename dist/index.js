@@ -37,6 +37,10 @@ var _lodash11 = require('lodash.forin');
 
 var _lodash12 = _interopRequireDefault(_lodash11);
 
+var _lodash13 = require('lodash.clonedeep');
+
+var _lodash14 = _interopRequireDefault(_lodash13);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function createFilter(reducerName, inboundPaths, outboundPaths) {
@@ -106,7 +110,7 @@ function persistFilter(state) {
 			}
 		});
 	} else if (transformType === 'blacklist') {
-		subset = Object.assign({}, state);
+		subset = (0, _lodash14.default)(state);
 		paths.forEach(function (path) {
 			if ((typeof path === 'undefined' ? 'undefined' : _typeof(path)) === 'object' && !(path instanceof Array)) {
 				var value = filterObject(path, state);
