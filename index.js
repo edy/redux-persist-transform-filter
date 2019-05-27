@@ -36,7 +36,7 @@ export function createBlacklistFilter (reducerName, inboundPaths, outboundPaths)
 }
 
 function filterObject({ path, filterFunction = () => true }, state) {
-	const value = get(state, path);
+	const value = get(state, path, state);
 
 	if (value instanceof Array) {
 		return value.filter(filterFunction)
@@ -77,11 +77,13 @@ export function persistFilter (state, paths = [], transformType = 'whitelist') {
 
 				if (!isEmpty(value)) {
 					if (value instanceof Array) {
-						set(subset, path.path, get(subset, path.path).filter((x) => false));
+						set(subset, path.path, get(subset, path.path, subset).filter((x) => false));
 					} else {
 						forIn(value, (value, key) => { unset(subset, `${path.path}[${key}]`) });
 					}
-				}
+        } else {
+          subset = value;
+        }
 			} else {
 				const value = get(state, path);
 
