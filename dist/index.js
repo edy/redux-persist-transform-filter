@@ -73,7 +73,7 @@ function filterObject(_ref, state) {
 		return true;
 	} : _ref$filterFunction;
 
-	var value = (0, _lodash2.default)(state, path);
+	var value = (0, _lodash2.default)(state, path, state);
 
 	if (value instanceof Array) {
 		return value.filter(filterFunction);
@@ -117,7 +117,7 @@ function persistFilter(state) {
 
 				if (!(0, _lodash10.default)(value)) {
 					if (value instanceof Array) {
-						(0, _lodash4.default)(subset, path.path, (0, _lodash2.default)(subset, path.path).filter(function (x) {
+						(0, _lodash4.default)(subset, path.path, (0, _lodash2.default)(subset, path.path, subset).filter(function (x) {
 							return false;
 						}));
 					} else {
@@ -125,6 +125,8 @@ function persistFilter(state) {
 							(0, _lodash6.default)(subset, path.path + '[' + key + ']');
 						});
 					}
+				} else {
+					subset = value;
 				}
 			} else {
 				var _value2 = (0, _lodash2.default)(state, path);
