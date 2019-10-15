@@ -1,12 +1,12 @@
 {
   "name": "redux-persist-transform-filter",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "Filter transformator for redux-persist",
   "main": "dist/index.js",
   "scripts": {
     "test": "mocha --require babel-register spec.js",
     "build": "mkdir -p dist && babel index.js -o dist/index.js",
-    "release": "npm test && npm run build && release-it"
+    "release": "npm test && npm run build && release-it --no-git.requireCleanWorkingDir"
   },
   "repository": {
     "type": "git",
