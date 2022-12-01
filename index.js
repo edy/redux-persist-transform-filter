@@ -1,11 +1,11 @@
 import { createTransform } from 'redux-persist';
-import get from 'lodash.get';
-import set from 'lodash.set';
-import unset from 'lodash.unset';
-import pickBy from 'lodash.pickby';
-import isEmpty from 'lodash.isempty';
-import forIn from 'lodash.forin';
-import cloneDeep from 'lodash.clonedeep';
+import get from 'lodash/get';
+import set from 'lodash/set';
+import unset from 'lodash/unset';
+import pickBy from 'lodash/pickby';
+import isEmpty from 'lodash/isempty';
+import forIn from 'lodash/forin';
+import cloneDeep from 'lodash/clonedeep';
 
 export function createFilter (reducerName, inboundPaths, outboundPaths, transformType = 'whitelist') {
 	return createTransform(
@@ -81,9 +81,9 @@ export function persistFilter (state, paths = [], transformType = 'whitelist') {
 					} else {
 						forIn(value, (value, key) => { unset(subset, `${path.path}[${key}]`) });
 					}
-        } else {
-          subset = value;
-        }
+		} else {
+		  subset = value;
+		}
 			} else {
 				const value = get(state, path);
 

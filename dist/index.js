@@ -13,33 +13,33 @@ exports.persistFilter = persistFilter;
 
 var _reduxPersist = require('redux-persist');
 
-var _lodash = require('lodash.get');
+var _get = require('lodash/get');
 
-var _lodash2 = _interopRequireDefault(_lodash);
+var _get2 = _interopRequireDefault(_get);
 
-var _lodash3 = require('lodash.set');
+var _set = require('lodash/set');
 
-var _lodash4 = _interopRequireDefault(_lodash3);
+var _set2 = _interopRequireDefault(_set);
 
-var _lodash5 = require('lodash.unset');
+var _unset = require('lodash/unset');
 
-var _lodash6 = _interopRequireDefault(_lodash5);
+var _unset2 = _interopRequireDefault(_unset);
 
-var _lodash7 = require('lodash.pickby');
+var _pickby = require('lodash/pickby');
 
-var _lodash8 = _interopRequireDefault(_lodash7);
+var _pickby2 = _interopRequireDefault(_pickby);
 
-var _lodash9 = require('lodash.isempty');
+var _isempty = require('lodash/isempty');
 
-var _lodash10 = _interopRequireDefault(_lodash9);
+var _isempty2 = _interopRequireDefault(_isempty);
 
-var _lodash11 = require('lodash.forin');
+var _forin = require('lodash/forin');
 
-var _lodash12 = _interopRequireDefault(_lodash11);
+var _forin2 = _interopRequireDefault(_forin);
 
-var _lodash13 = require('lodash.clonedeep');
+var _clonedeep = require('lodash/clonedeep');
 
-var _lodash14 = _interopRequireDefault(_lodash13);
+var _clonedeep2 = _interopRequireDefault(_clonedeep);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -73,13 +73,13 @@ function filterObject(_ref, state) {
 		return true;
 	} : _ref$filterFunction;
 
-	var value = (0, _lodash2.default)(state, path, state);
+	var value = (0, _get2.default)(state, path, state);
 
 	if (value instanceof Array) {
 		return value.filter(filterFunction);
 	}
 
-	return (0, _lodash8.default)(value, filterFunction);
+	return (0, _pickby2.default)(value, filterFunction);
 }
 
 function persistFilter(state) {
@@ -98,41 +98,41 @@ function persistFilter(state) {
 			if ((typeof path === 'undefined' ? 'undefined' : _typeof(path)) === 'object' && !(path instanceof Array)) {
 				var value = filterObject(path, state);
 
-				if (!(0, _lodash10.default)(value)) {
-					(0, _lodash4.default)(subset, path.path, value);
+				if (!(0, _isempty2.default)(value)) {
+					(0, _set2.default)(subset, path.path, value);
 				}
 			} else {
-				var _value = (0, _lodash2.default)(state, path);
+				var _value = (0, _get2.default)(state, path);
 
 				if (typeof _value !== 'undefined') {
-					(0, _lodash4.default)(subset, path, _value);
+					(0, _set2.default)(subset, path, _value);
 				}
 			}
 		});
 	} else if (transformType === 'blacklist') {
-		subset = (0, _lodash14.default)(state);
+		subset = (0, _clonedeep2.default)(state);
 		paths.forEach(function (path) {
 			if ((typeof path === 'undefined' ? 'undefined' : _typeof(path)) === 'object' && !(path instanceof Array)) {
 				var value = filterObject(path, state);
 
-				if (!(0, _lodash10.default)(value)) {
+				if (!(0, _isempty2.default)(value)) {
 					if (value instanceof Array) {
-						(0, _lodash4.default)(subset, path.path, (0, _lodash2.default)(subset, path.path, subset).filter(function (x) {
+						(0, _set2.default)(subset, path.path, (0, _get2.default)(subset, path.path, subset).filter(function (x) {
 							return false;
 						}));
 					} else {
-						(0, _lodash12.default)(value, function (value, key) {
-							(0, _lodash6.default)(subset, path.path + '[' + key + ']');
+						(0, _forin2.default)(value, function (value, key) {
+							(0, _unset2.default)(subset, path.path + '[' + key + ']');
 						});
 					}
 				} else {
 					subset = value;
 				}
 			} else {
-				var _value2 = (0, _lodash2.default)(state, path);
+				var _value2 = (0, _get2.default)(state, path);
 
 				if (typeof _value2 !== 'undefined') {
-					(0, _lodash6.default)(subset, path);
+					(0, _unset2.default)(subset, path);
 				}
 			}
 		});
