@@ -81,9 +81,9 @@ export function persistFilter (state, paths = [], transformType = 'whitelist') {
 					} else {
 						forIn(value, (value, key) => { unset(subset, `${path.path}[${key}]`) });
 					}
-		} else {
-		  subset = value;
-		}
+				} else {
+					subset = value;
+				}
 			} else {
 				const value = get(state, path);
 
