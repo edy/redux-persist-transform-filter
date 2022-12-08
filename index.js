@@ -2,10 +2,10 @@ import { createTransform } from 'redux-persist';
 import get from 'lodash/get';
 import set from 'lodash/set';
 import unset from 'lodash/unset';
-import pickBy from 'lodash/pickby';
-import isEmpty from 'lodash/isempty';
-import forIn from 'lodash/forin';
-import cloneDeep from 'lodash/clonedeep';
+import pickBy from 'lodash/pickBy';
+import isEmpty from 'lodash/isEmpty';
+import forIn from 'lodash/forIn';
+import cloneDeep from 'lodash/cloneDeep';
 
 export function createFilter (reducerName, inboundPaths, outboundPaths, transformType = 'whitelist') {
 	return createTransform(
