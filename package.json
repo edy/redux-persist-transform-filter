@@ -1,6 +1,6 @@
 {
   "name": "redux-persist-transform-filter",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "Filter transformator for redux-persist",
   "main": "dist/index.js",
   "scripts": {

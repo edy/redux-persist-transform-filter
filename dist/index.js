@@ -25,21 +25,21 @@ var _unset = require('lodash/unset');
 
 var _unset2 = _interopRequireDefault(_unset);
 
-var _pickby = require('lodash/pickby');
+var _pickBy = require('lodash/pickBy');
 
-var _pickby2 = _interopRequireDefault(_pickby);
+var _pickBy2 = _interopRequireDefault(_pickBy);
 
-var _isempty = require('lodash/isempty');
+var _isEmpty = require('lodash/isEmpty');
 
-var _isempty2 = _interopRequireDefault(_isempty);
+var _isEmpty2 = _interopRequireDefault(_isEmpty);
 
-var _forin = require('lodash/forin');
+var _forIn = require('lodash/forIn');
 
-var _forin2 = _interopRequireDefault(_forin);
+var _forIn2 = _interopRequireDefault(_forIn);
 
-var _clonedeep = require('lodash/clonedeep');
+var _cloneDeep = require('lodash/cloneDeep');
 
-var _clonedeep2 = _interopRequireDefault(_clonedeep);
+var _cloneDeep2 = _interopRequireDefault(_cloneDeep);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -79,7 +79,7 @@ function filterObject(_ref, state) {
 		return value.filter(filterFunction);
 	}
 
-	return (0, _pickby2.default)(value, filterFunction);
+	return (0, _pickBy2.default)(value, filterFunction);
 }
 
 function persistFilter(state) {
@@ -98,7 +98,7 @@ function persistFilter(state) {
 			if ((typeof path === 'undefined' ? 'undefined' : _typeof(path)) === 'object' && !(path instanceof Array)) {
 				var value = filterObject(path, state);
 
-				if (!(0, _isempty2.default)(value)) {
+				if (!(0, _isEmpty2.default)(value)) {
 					(0, _set2.default)(subset, path.path, value);
 				}
 			} else {
@@ -110,18 +110,18 @@ function persistFilter(state) {
 			}
 		});
 	} else if (transformType === 'blacklist') {
-		subset = (0, _clonedeep2.default)(state);
+		subset = (0, _cloneDeep2.default)(state);
 		paths.forEach(function (path) {
 			if ((typeof path === 'undefined' ? 'undefined' : _typeof(path)) === 'object' && !(path instanceof Array)) {
 				var value = filterObject(path, state);
 
-				if (!(0, _isempty2.default)(value)) {
+				if (!(0, _isEmpty2.default)(value)) {
 					if (value instanceof Array) {
 						(0, _set2.default)(subset, path.path, (0, _get2.default)(subset, path.path, subset).filter(function (x) {
 							return false;
 						}));
 					} else {
-						(0, _forin2.default)(value, function (value, key) {
+						(0, _forIn2.default)(value, function (value, key) {
 							(0, _unset2.default)(subset, path.path + '[' + key + ']');
 						});
 					}
